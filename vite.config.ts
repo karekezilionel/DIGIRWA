@@ -10,6 +10,7 @@ export default defineConfig({
         main: path.resolve(__dirname, "index.html"),
         login: path.resolve(__dirname, "login.html"),
         register: path.resolve(__dirname, "register.html"),
+         dashboard: path.resolve(__dirname, "pages/dashboard.html"),
       },
     },
   },
