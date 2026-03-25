@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIGIRWA - Digital Learning Platform</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+     
+      body {
+        display: block; 
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      }
+      
+      .landing-hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.1), transparent 40%),
+                    radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), transparent 40%);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .landing-hero::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1" fill="rgba(37,99,235,0.05)"/></svg>') repeat;
+        z-index: -1;
+      }
+
+      .hero-content {
+        max-width: 800px;
+        animation: fadeUp 0.8s ease-out forwards;
+      }
+
+      .hero-title {
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        font-weight: 800;
+        color: var(--text-main);
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-title span {
+        color: var(--primary);
+      }
+
+      .hero-desc {
+        font-size: clamp(1.1rem, 2vw, 1.25rem);
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 2.5rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .features-section {
+        padding: 6rem 2rem;
+        background-color: var(--surface);
+      }
+
+      .features-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .feature-card {
+        background: var(--bg-color);
+        padding: 2rem;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: left;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      }
+
+      .feature-icon {
+        width: 48px;
+        height: 48px;
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .feature-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--text-main);
+      }
+
+      .feature-desc {
+        color: var(--text-muted);
+        line-height: 1.5;
+        font-size: 0.95rem;
+      }
+
+      .cta-section {
+        padding: 6rem 2rem;
+        text-align: center;
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+      }
+
+      .cta-content {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .cta-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .btn-large {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        border-radius: 99px;
+      }
+      
+      .nav-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 1.5rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .brand {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        text-decoration: none;
+        letter-spacing: -0.5px;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <header class="nav-header">
+      <a href="/" class="brand">DIGIRWA</a>
+    </header>
+
+    <section class="landing-hero">
+      <div class="hero-content">
+        <h1 class="hero-title">Welcome to <span>DIGIRWA</span></h1>
+        <p class="hero-desc">
+          DIGIRWA is a digital learning platform for Rwandan youth. It provides interactive courses on digital literacy, coding, productivity tools, and more, helping learners gain practical skills, track progress, and prepare for jobs and innovation opportunities.
+        </p>
+        <a href="/register.html" class="btn btn-primary btn-large">
+          Get Started <i data-lucide="arrow-right"></i>
+        </a>
+      </div>
+    </section>
+
+    <section class="features-section">
+      <div class="features-container">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+          <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">Why Choose DIGIRWA?</h2>
+          <p style="color: var(--text-muted); font-size: 1.1rem;">Empowering the next generation with essential digital skills for the modern world.</p>
+        </div>
+        
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i data-lucide="mouse-pointer-click"></i>
+            </div>
+            <h3 class="feature-title">Interactive Learning</h3>
+            <p class="feature-desc">Engage with hands-on quizzes and practical exercises that reinforce your understanding of every topic.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i data-lucide="trending-up"></i>
+            </div>
+            <h3 class="feature-title">Progress Tracking</h3>
+            <p class="feature-desc">Monitor your learning journey, view your scores, and earn achievements as you complete courses.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i data-lucide="book-open"></i>
+            </div>
+            <h3 class="feature-title">Accessible Skills</h3>
+            <p class="feature-desc">Master essential tools like Microsoft Office, Gmail, HTML, CSS, and JavaScript at your own pace.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i data-lucide="briefcase"></i>
+            </div>
+            <h3 class="feature-title">Job Preparation & Innovation</h3>
+            <p class="feature-desc">Gain the practical, real-world skills needed for modern employment and technological innovation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2 class="cta-title">Ready to start learning?</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem;">Join thousands of Rwandan youth building their digital future today.</p>
+        <a href="/register.html" class="btn btn-primary btn-large">
+          Get Started now! <i data-lucide="arrow-right"></i>
+        </a>
+      </div>
+    </section>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.lucide) window.lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>

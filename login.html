@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - DIGIRWA</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="auth-container card">
+        <h2
+          data-i18n="welcome_back"
+          style="text-align: center; margin-bottom: 2rem; font-size: 1.5rem"
+        >
+          Welcome Back!
+        </h2>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="role" data-i18n="role">Role</label>
+            <select id="role" class="form-control" required>
+              <option value="student">Student/User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="email" data-i18n="email">Email Address</label>
+            <input type="email" id="email" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label for="password" data-i18n="password">Password</label>
+            <div class="password-input">
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                required
+              />
+              <button type="button" class="password-toggle">
+                <i data-lucide="eye"></i>
+              </button>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="width: 100%"
+            data-i18n="sign_in"
+          >
+            Sign In
+          </button>
+        </form>
+        <p
+          style="
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+          "
+        >
+          <span data-i18n="dont_have_account">Don't have an account?</span>
+          <a
+            href="/register.html"
+            style="
+              color: var(--primary);
+              text-decoration: none;
+              font-weight: 500;
+            "
+            data-i18n="register"
+            >Register</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+    <script type="module" src="/js/auth.js"></script>
+    <script type="module" src="/js/firebase.js"></script>
+  </body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progress - DIGIRWA</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      .chart-bar {
+        height: 30px;
+        background-color: var(--primary);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        color: white;
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+        transition: width 1s ease;
+      }
+      .chart-label {
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="margin-bottom: 2rem" data-i18n="progress">Progress</h1>
+
+      <div class="card" style="margin-bottom: 2rem">
+        <h2 class="section-title" style="margin-top: 0">Course Completion</h2>
+        <div id="progress-charts"></div>
+      </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/progress.js"></script>
+    <script src="/js/data.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("progress-charts");
+        let courses = JSON.parse(localStorage.getItem("digirwa_courses") || "[]");
+        if (courses.length === 0) courses = mockData.courses;
+        
+        if (container && courses) {
+          container.innerHTML = courses
+            .map(
+              (c) => {
+                const totalLessons = c.lessons ? c.lessons.length : 0;
+                const progressPercent = typeof ProgressManager !== 'undefined' ? 
+                  ProgressManager.getCourseCompletionPercentage(c.id, totalLessons) : 
+                  (c.progress || 0);
+                
+                const userProgress = typeof ProgressManager !== 'undefined' ? ProgressManager.getUserProgress() : null;
+                const quizScore = userProgress && userProgress[c.id] && userProgress[c.id].quizScore !== null 
+                  ? userProgress[c.id].quizScore + '%' 
+                  : 'Not taken';
+                  
+                const completedLessons = userProgress && userProgress[c.id] && userProgress[c.id].completedLessons 
+                  ? userProgress[c.id].completedLessons.length 
+                  : 0;
+                  
+                const badge = progressPercent === 100 ? '<i data-lucide="award" style="color: gold; margin-left: 8px;"></i>' : '';
+
+                return `
+                    <div style="margin-bottom: 1.5rem;">
+                        <div class="chart-label" style="display: flex; justify-content: space-between; align-items: center;">
+                          <span>${c.title} ${badge}</span>
+                          <span style="font-size: 0.85rem; color: var(--text-muted);">Quiz Score: ${quizScore} | Lessons: ${completedLessons}/${totalLessons}</span>
+                        </div>
+                        <div style="width: 100%; background: var(--border); border-radius: 4px; overflow: hidden;">
+                            <div class="chart-bar" style="width: ${progressPercent}%">${progressPercent}%</div>
+                        </div>
+                    </div>
+                `;
+              }
+            )
+            .join("");
+            
+          if (window.lucide) window.lucide.createIcons();
+        }
+      });
+    </script>
+  </body>
+</html>

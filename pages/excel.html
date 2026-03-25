@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MS Excel - DIGIRWA</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      .lesson-header {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+        padding: 3rem 2rem;
+        border-radius: var(--radius);
+        margin-bottom: 2rem;
+      }
+      .lesson-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+      }
+      .video-container {
+        position: relative;
+        padding-bottom: 56.25%; 
+        height: 0;
+        overflow: hidden;
+        border-radius: var(--radius);
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+      .quiz-container {
+        background: var(--surface);
+        padding: 2rem;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        margin-bottom: 2rem;
+      }
+      .question {
+        margin-bottom: 1.5rem;
+      }
+      .question h4 {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .option-label {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+      .option-label:hover {
+        background: rgba(16, 185, 129, 0.05);
+        border-color: var(--success);
+      }
+      .option-label input[type="radio"] {
+        width: 1.2rem;
+        height: 1.2rem;
+        accent-color: var(--success);
+      }
+      .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem;
+      }
+      #quiz-feedback {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        border-radius: var(--radius);
+        font-weight: 600;
+        display: none;
+      }
+      .feedback-success {
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--success);
+        border: 1px solid var(--success);
+      }
+      .feedback-error {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--danger);
+        border: 1px solid var(--danger);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="breadcrumbs" style="margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+        <a href="/pages/mycourses.html" style="color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 0.25rem;">
+          <i data-lucide="book-open" style="width: 14px; height: 14px;"></i> My Courses
+        </a>
+        <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+        <span style="font-weight: 500;">Microsoft Office Essentials</span>
+        <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+        <span style="color: var(--text-main); font-weight: 600;">MS Excel</span>
+      </nav>
+
+      <div class="lesson-header">
+        <h1 class="lesson-title">Lesson 2: MS Excel</h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px;">Master spreadsheets, data entry, basic formulas, and functions in Microsoft Excel.</p>
+      </div>
+
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/wbJcJCkBcMg" title="MS Excel Tutorial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <div class="quiz-container">
+        <h2 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Knowledge Check</h2>
+        <form id="quiz-form">
+          <div class="question">
+            <h4>1. What is a single box in an Excel spreadsheet called?</h4>
+            <div class="options">
+              <label class="option-label"><input type="radio" name="q1" value="a"> A block</label>
+              <label class="option-label"><input type="radio" name="q1" value="b"> A cell</label>
+              <label class="option-label"><input type="radio" name="q1" value="c"> A grid</label>
+              <label class="option-label"><input type="radio" name="q1" value="d"> A table</label>
+            </div>
+          </div>
+          <div class="question">
+            <h4>2. Which symbol must you use to start a formula in Excel?</h4>
+            <div class="options">
+              <label class="option-label"><input type="radio" name="q2" value="a"> +</label>
+              <label class="option-label"><input type="radio" name="q2" value="b"> -</label>
+              <label class="option-label"><input type="radio" name="q2" value="c"> =</label>
+              <label class="option-label"><input type="radio" name="q2" value="d"> *</label>
+            </div>
+          </div>
+          <div class="question">
+            <h4>3. How are columns identified in Excel?</h4>
+            <div class="options">
+              <label class="option-label"><input type="radio" name="q3" value="a"> By numbers (1, 2, 3...)</label>
+              <label class="option-label"><input type="radio" name="q3" value="b"> By letters (A, B, C...)</label>
+              <label class="option-label"><input type="radio" name="q3" value="c"> By Roman numerals (I, II, III...)</label>
+              <label class="option-label"><input type="radio" name="q3" value="d"> By symbols (!, @, #...)</label>
+            </div>
+          </div>
+          <div class="question">
+            <h4>4. Which function adds all the numbers in a range of cells?</h4>
+            <div class="options">
+              <label class="option-label"><input type="radio" name="q4" value="a"> =ADD()</label>
+              <label class="option-label"><input type="radio" name="q4" value="b"> =TOTAL()</label>
+              <label class="option-label"><input type="radio" name="q4" value="c"> =SUM()</label>
+              <label class="option-label"><input type="radio" name="q4" value="d"> =PLUS()</label>
+            </div>
+          </div>
+          <div class="question">
+            <h4>5. What is the intersection of a row and a column called?</h4>
+            <div class="options">
+              <label class="option-label"><input type="radio" name="q5" value="a"> Worksheet</label>
+              <label class="option-label"><input type="radio" name="q5" value="b"> Cell</label>
+              <label class="option-label"><input type="radio" name="q5" value="c"> Formula bar</label>
+              <label class="option-label"><input type="radio" name="q5" value="d"> Range</label>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary" style="margin-top: 1rem; background-color: var(--success); border-color: var(--success);">Submit Quiz</button>
+          <div id="quiz-feedback"></div>
+        </form>
+      </div>
+
+      <div class="nav-buttons">
+        <a href="/pages/word.html" class="btn btn-outline"><i data-lucide="arrow-left"></i> Previous Lesson</a>
+        <a href="/pages/powerpoint.html" class="btn btn-primary">Next Lesson: MS PowerPoint <i data-lucide="arrow-right"></i></a>
+      </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/progress.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.trackActiveCourse) window.trackActiveCourse(2);
+      });
+
+      
+      async function saveQuizScoreToFirebase(userId, courseId, lessonId, score) {
+        console.log(`[Firebase Placeholder] Saving score ${score} for user ${userId}, lesson ${lessonId}`);
+        
+      }
+
+      document.getElementById('quiz-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const answers = {
+          q1: 'b',
+          q2: 'c',
+          q3: 'b',
+          q4: 'c',
+          q5: 'b'
+        };
+        
+        let score = 0;
+        let total = Object.keys(answers).length;
+        
+        for (let q in answers) {
+          const selected = document.querySelector(`input[name="${q}"]:checked`);
+          if (selected && selected.value === answers[q]) {
+            score++;
+          }
+        }
+        
+        const feedback = document.getElementById('quiz-feedback');
+        feedback.style.display = 'block';
+        
+        if (score === total) {
+          feedback.className = 'feedback-success';
+          feedback.innerHTML = `<i data-lucide="check-circle" style="vertical-align: middle; margin-right: 8px;"></i> Excellent! You scored ${score}/${total}.`;
+        } else if (score >= total / 2) {
+          feedback.className = 'feedback-success';
+          feedback.innerHTML = `<i data-lucide="check-circle" style="vertical-align: middle; margin-right: 8px;"></i> Good job! You scored ${score}/${total}. Review the video to get a perfect score.`;
+        } else {
+          feedback.className = 'feedback-error';
+          feedback.innerHTML = `<i data-lucide="alert-circle" style="vertical-align: middle; margin-right: 8px;"></i> You scored ${score}/${total}. Please re-watch the video and try again.`;
+        }
+        
+        if (window.lucide) window.lucide.createIcons();
+        
+        
+        const userId = localStorage.getItem('digirwa_user') ? JSON.parse(localStorage.getItem('digirwa_user')).id : 'anonymous';
+        saveQuizScoreToFirebase(userId, 'office_essentials', 'excel', score);
+        
+      
+        if (typeof ProgressManager !== 'undefined') {
+          ProgressManager.completeLesson(2, 202);
+        }
+      });
+    </script>
+  </body>
+</html>

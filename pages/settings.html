@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - DIGIRWA</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--border);
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background-color: var(--primary);
+      }
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="margin-bottom: 2rem" data-i18n="settings">Settings</h1>
+
+      <div class="card" style="max-width: 600px">
+        <div class="list-item" style="padding: 1.5rem 0">
+          <div>
+            <h3 style="margin-bottom: 0.25rem" data-i18n="dark_mode">
+              Dark Mode
+            </h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem">
+              Toggle dark mode appearance
+            </p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="settings-theme-toggle" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="list-item" style="padding: 1.5rem 0">
+          <div>
+            <h3 style="margin-bottom: 0.25rem" data-i18n="language">
+              Language
+            </h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem">
+              Select your preferred language
+            </p>
+          </div>
+          <select
+            id="settings-lang-toggle"
+            class="form-control"
+            style="width: auto"
+          >
+            <option value="en">English</option>
+            <option value="rw">Kinyarwanda</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        
+        const themeToggle = document.getElementById("settings-theme-toggle");
+
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+        if (currentTheme === "dark") {
+          themeToggle.checked = true;
+        }
+
+        themeToggle.addEventListener("change", function () {
+          const newTheme = this.checked ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", newTheme);
+          localStorage.setItem("digirwa_theme", newTheme);
+
+        
+          const navIcon = document.querySelector("#theme-toggle i");
+          if (navIcon && window.lucide) {
+            navIcon.setAttribute(
+              "data-lucide",
+              newTheme === "dark" ? "sun" : "moon",
+            );
+            lucide.createIcons();
+          }
+        });
+
+        
+        const langToggle = document.getElementById("settings-lang-toggle");
+        const savedLang = localStorage.getItem("digirwa_lang") || "en";
+        langToggle.value = savedLang;
+
+        langToggle.addEventListener("change", (e) => {
+          if (typeof setLanguage === "function") {
+            setLanguage(e.target.value);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Courses - DIGIRWA</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="margin-bottom: 2rem" data-i18n="my_courses">My Courses</h1>
+      <div class="grid-3" id="all-courses">
+        
+      </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/progress.js"></script>
+    <script src="/js/data.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.renderCourses) {
+          window.renderCourses("all-courses");
+        }
+      });
+    </script>
+  </body>
+</html>
