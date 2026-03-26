@@ -26,6 +26,7 @@ export default defineConfig({
         quiz: path.resolve(__dirname, "pages/quiz.html"),
         settings: path.resolve(__dirname, "pages/settings.html"),
         word: path.resolve(__dirname, "pages/word.html"),
+        admindashboard: path.resolve(__dirname, "admin/dashboard.html"),
       },
     },
   },
