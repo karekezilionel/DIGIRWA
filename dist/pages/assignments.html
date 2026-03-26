@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignments - DIGIRWA</title>
+    <script type="module" crossorigin src="../assets/main-Bj8hB6fU.js"></script>
+    <script type="module" crossorigin src="../assets/data-DK6-LDdd.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/main-BFZFGG2g.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="margin-bottom: 2rem" data-i18n="assignments">Assignments</h1>
+
+      <div class="card">
+        <div id="assignments-list"></div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("assignments-list");
+        if (container && mockData.assignments) {
+          container.innerHTML = mockData.assignments
+            .map(
+              (a) => `
+                    <div class="list-item">
+                        <div>
+                            <h3 style="margin-bottom: 0.25rem;">${a.title}</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">${a.course} • <span data-i18n="deadline">Deadline</span>: ${a.deadline}</p>
+                        </div>
+                        <span class="badge badge-${a.status}" data-i18n="${a.status}">${a.status === "completed" ? "Completed" : "Pending"}</span>
+                    </div>
+                `,
+            )
+            .join("");
+          if (typeof initLanguage === "function") {
+            const savedLang = localStorage.getItem("digirwa_lang") || "en";
+            setLanguage(savedLang);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

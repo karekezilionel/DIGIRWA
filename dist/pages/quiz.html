@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz - DIGIRWA</title>
+    <style>
+      .quiz-question {
+        margin-bottom: 2rem;
+      }
+      .quiz-question h3 {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+      .quiz-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .quiz-option {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+      .quiz-option:hover {
+        border-color: var(--primary);
+        background: rgba(37, 99, 235, 0.05);
+      }
+      .result-container {
+        text-align: center;
+        padding: 3rem 2rem;
+      }
+      .result-score {
+        font-size: 3rem;
+        font-weight: bold;
+        color: var(--primary);
+        margin: 1rem 0;
+      }
+    </style>
+    <script type="module" crossorigin src="../assets/main-Bj8hB6fU.js"></script>
+    <script type="module" crossorigin src="../assets/progress-l0sNRNKZ.js"></script>
+    <script type="module" crossorigin src="../assets/data-DK6-LDdd.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/main-BFZFGG2g.css">
+  </head>
+  <body>
+    <div class="container">
+      <div style="margin-bottom: 2rem;">
+        <a href="/pages/mycourses.html" style="color: var(--text-muted); text-decoration: none;">My Courses</a>
+        <span style="color: var(--text-muted); margin: 0 0.5rem;">/</span>
+        <a href="#" id="breadcrumb-course" style="color: var(--text-muted); text-decoration: none;">Course</a>
+        <span style="color: var(--text-muted); margin: 0 0.5rem;">/</span>
+        <span>Quiz</span>
+      </div>
+
+      <h1 id="quiz-title" style="margin-bottom: 2rem;">Course Quiz</h1>
+
+      <div class="card">
+        <div id="quiz-content">
+          
+        </div>
+        <div id="quiz-footer" style="margin-top: 2rem; display: flex; justify-content: flex-end;">
+          <button class="btn btn-primary" onclick="submitQuiz()">Submit Quiz</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentQuiz = [];
+      let courseId = 1;
+      let quizId = null;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseIdParam = urlParams.get('courseId');
+        
+        if (!courseIdParam) {
+          
+          document.getElementById("breadcrumb-course").textContent = "All Quizzes";
+          document.getElementById("breadcrumb-course").href = "#";
+          document.getElementById("quiz-title").textContent = "Available Quizzes";
+          document.getElementById("quiz-footer").style.display = "none";
+          
+          let courses = JSON.parse(localStorage.getItem("digirwa_courses") || "[]");
+          if (courses.length === 0) courses = mockData.courses;
+          
+          let html = '<div class="quiz-list" style="display: grid; gap: 1rem;">';
+          courses.forEach(course => {
+            let quizzes = [];
+            if (course.lessons) {
+              quizzes = course.lessons.filter(l => l.type === 'quiz');
+            }
+            if (quizzes.length === 0) {
+              
+              quizzes.push({ title: "Final Quiz", desc: `Test your knowledge on ${course.title}`, quizId: "" });
+            }
+            
+            quizzes.forEach(quiz => {
+              html += `
+                <div class="quiz-card" style="padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <h3 style="margin-bottom: 0.5rem;">${course.title} - ${quiz.title}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">${quiz.desc || `Test your knowledge on ${course.title}`}</p>
+                  </div>
+                  <a href="/pages/quiz.html?courseId=${course.id}${quiz.quizId ? '&quizId=' + quiz.quizId : ''}" class="btn btn-primary">Take Quiz</a>
+                </div>
+              `;
+            });
+          });
+          html += '</div>';
+          document.getElementById("quiz-content").innerHTML = html;
+          
+          if (window.lucide) window.lucide.createIcons();
+          return;
+        }
+
+        courseId = parseInt(courseIdParam) || 1;
+        quizId = urlParams.get('quizId');
+        
+        if (window.trackActiveCourse) window.trackActiveCourse(courseId);
+
+        let courses = JSON.parse(localStorage.getItem("digirwa_courses") || "[]");
+        if (courses.length === 0) courses = mockData.courses;
+        const course = courses.find(c => c.id === courseId);
+        
+        if (course) {
+          document.getElementById("breadcrumb-course").textContent = course.title;
+          document.getElementById("breadcrumb-course").href = (course.id === 4 || course.id === 5) ? `/pages/interactive-course.html?id=${course.id}` : `/pages/course.html?id=${course.id}`;
+        }
+
+          function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+              randomIndex = Math.floor(Math.random() * currentIndex);
+              currentIndex--;
+              [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+          }
+
+          function escapeHTML(str) {
+            if (typeof str !== 'string') return str;
+            return str.replace(/[&<>'"]/g, 
+              tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+              }[tag] || tag)
+            );
+          }
+
+          if (courseId === 4 && quizId === 'html') {
+            document.getElementById("quiz-title").textContent = "HTML Basics Quiz";
+            
+            const htmlQuestionPool = [
+              { q: "What does HTML stand for?", options: ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language", "Hyper Tool Markup Language"], a: 0 },
+              { q: "Choose the correct HTML element for the largest heading:", options: ["<heading>", "<h6>", "<h1>", "<head>"], a: 2 },
+              { q: "What is the correct HTML element for inserting a line break?", options: ["<lb>", "<br>", "<break>", "<newline>"], a: 1 },
+              { q: "What is the correct HTML for adding a background color?", options: ["<body bg='yellow'>", "<background>yellow</background>", "<body style='background-color:yellow;'>", "<body color='yellow'>"], a: 2 },
+              { q: "Choose the correct HTML element to define important text", options: ["<strong>", "<b>", "<i>", "<important>"], a: 0 },
+              { q: "Choose the correct HTML element to define emphasized text", options: ["<italic>", "<i>", "<em>", "<emp>"], a: 2 },
+              { q: "What is the correct HTML for creating a hyperlink?", options: ["<a name='http://www.w3schools.com'>W3Schools.com</a>", "<a href='http://www.w3schools.com'>W3Schools</a>", "<a url='http://www.w3schools.com'>W3Schools.com</a>", "<a>http://www.w3schools.com</a>"], a: 1 },
+              { q: "Which character is used to indicate an end tag?", options: ["*", "<", "^", "/"], a: 3 },
+              { q: "How can you open a link in a new tab/browser window?", options: ["<a href='url' target='new'>", "<a href='url' target='_blank'>", "<a href='url' new>", "<a href='url' target='_window'>"], a: 1 },
+              { q: "Which of these elements are all <table> elements?", options: ["<table><tr><tt>", "<table><head><tfoot>", "<table><tr><td>", "<thead><body><tr>"], a: 2 },
+              { q: "Inline elements are normally displayed without starting a new line.", options: ["True", "False"], a: 0 },
+              { q: "How can you make a numbered list?", options: ["<dl>", "<ul>", "<ol>", "<list>"], a: 2 },
+              { q: "How can you make a bulleted list?", options: ["<ol>", "<list>", "<ul>", "<dl>"], a: 2 },
+              { q: "What is the correct HTML for making a checkbox?", options: ["<check>", "<input type='check'>", "<checkbox>", "<input type='checkbox'>"], a: 3 },
+              { q: "What is the correct HTML for making a text input field?", options: ["<input type='textfield'>", "<textinput type='text'>", "<input type='text'>", "<textfield>"], a: 2 },
+              { q: "What is the correct HTML for making a drop-down list?", options: ["<input type='dropdown'>", "<list>", "<select>", "<input type='list'>"], a: 2 },
+              { q: "What is the correct HTML for making a text area?", options: ["<input type='textbox'>", "<input type='textarea'>", "<textarea>", "<text>"], a: 2 },
+              { q: "What is the correct HTML for inserting an image?", options: ["<img href='image.gif' alt='MyImage'>", "<img alt='MyImage'>image.gif</img>", "<img src='image.gif' alt='MyImage'>", "<image src='image.gif' alt='MyImage'>"], a: 2 },
+              { q: "What is the correct HTML for inserting a background image?", options: ["<body bg='background.gif'>", "<background img='background.gif'>", "<body style='background-image:url(background.gif)'>", "<body background='background.gif'>"], a: 2 },
+              { q: "An <iframe> is used to display a web page within a web page.", options: ["True", "False", "There is no such thing as an <iframe>", "Only for videos"], a: 0 },
+              { q: "HTML comments start with <!-- and end with -->", options: ["True", "False"], a: 0 },
+              { q: "Block elements are normally displayed without starting a new line.", options: ["True", "False"], a: 1 },
+              { q: "Which HTML element defines the title of a document?", options: ["<meta>", "<title>", "<head>", "<h1>"], a: 1 },
+              { q: "Which HTML attribute specifies an alternate text for an image, if the image cannot be displayed?", options: ["title", "src", "alt", "longdesc"], a: 2 },
+              { q: "Which doctype is correct for HTML5?", options: ["<!DOCTYPE HTML5>", "<!DOCTYPE html>", "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 5.0//EN\">", "<!DOCTYPE>"], a: 1 }
+            ];
+
+            let selectedQuestions = shuffleArray([...htmlQuestionPool]).slice(0, 15);
+
+            currentQuiz = selectedQuestions.map(q => {
+              const correctOptionText = q.options[q.a];
+              const shuffledOptions = shuffleArray([...q.options]);
+              const newCorrectIndex = shuffledOptions.indexOf(correctOptionText);
+              return {
+                q: escapeHTML(q.q),
+                options: shuffledOptions.map(opt => escapeHTML(opt)),
+                a: newCorrectIndex
+              };
+            });
+
+          } else if (courseId === 4 && quizId === 'css') {
+            document.getElementById("quiz-title").textContent = "CSS Basics Quiz";
+            
+            const cssQuestionPool = [
+              { q: "What does CSS stand for?", options: ["Computer Style Sheets", "Cascading Style Sheets", "Creative Style Sheets", "Colorful Style Sheets"], a: 1 },
+              { q: "Where in an HTML document is the correct place to refer to an external style sheet?", options: ["In the <body> section", "At the end of the document", "In the <head> section", "In the <title> section"], a: 2 },
+              { q: "Which HTML tag is used to define an internal style sheet?", options: ["<css>", "<style>", "<script>", "<link>"], a: 1 },
+              { q: "Which HTML attribute is used to define inline styles?", options: ["class", "style", "font", "styles"], a: 1 },
+              { q: "Which is the correct CSS syntax?", options: ["body {color: black;}", "{body:color=black;}", "body:color=black;", "{body;color:black;}"], a: 0 },
+              { q: "How do you insert a comment in a CSS file?", options: ["' this is a comment", "/* this is a comment */", "// this is a comment", "// this is a comment //"], a: 1 },
+              { q: "Which property is used to change the background color?", options: ["bgcolor", "color", "background-color", "bg-color"], a: 2 },
+              { q: "How do you add a background color for all <h1> elements?", options: ["all.h1 {background-color:#FFFFFF;}", "h1.all {background-color:#FFFFFF;}", "h1 {background-color:#FFFFFF;}", "h1 {bgcolor:#FFFFFF;}"], a: 2 },
+              { q: "Which CSS property is used to change the text color of an element?", options: ["fgcolor", "text-color", "color", "font-color"], a: 2 },
+              { q: "Which CSS property controls the text size?", options: ["font-size", "text-style", "text-size", "font-style"], a: 0 },
+              { q: "What is the correct CSS syntax for making all the <p> elements bold?", options: ["p {text-size:bold;}", "p {font-weight:bold;}", "<p style='text-size:bold;'>", "p {style:bold;}"], a: 1 },
+              { q: "How do you display hyperlinks without an underline?", options: ["a {text-decoration:none;}", "a {underline:none;}", "a {decoration:no-underline;}", "a {text-decoration:no-underline;}"], a: 0 },
+              { q: "How do you make each word in a text start with a capital letter?", options: ["text-transform:capitalize", "text-style:capitalize", "transform:capitalize", "text-transform:uppercase"], a: 0 },
+              { q: "Which property is used to change the font of an element?", options: ["font-family", "font-weight", "font-style", "font-type"], a: 0 },
+              { q: "How do you make the text bold?", options: ["font:bold;", "style:bold;", "font-weight:bold;", "text-weight:bold;"], a: 2 },
+              { q: "How do you display a border like this: The top border = 10px, the bottom border = 5px, the left border = 20px, and the right border = 1px?", options: ["border-width:10px 5px 20px 1px;", "border-width:10px 1px 5px 20px;", "border-width:5px 20px 10px 1px;", "border-width:10px 20px 5px 1px;"], a: 1 },
+              { q: "Which property is used to change the left margin of an element?", options: ["padding-left", "margin-left", "indent", "spacing-left"], a: 1 },
+              { q: "When using the padding property; are you allowed to use negative values?", options: ["Yes", "No", "Only for top and bottom", "Only for left and right"], a: 1 },
+              { q: "How do you make a list that lists its items with squares?", options: ["list-type: square;", "list-style-type: square;", "list: square;", "list-style: square;"], a: 1 },
+              { q: "How do you select an element with id 'demo'?", options: ["#demo", ".demo", "demo", "*demo"], a: 0 },
+              { q: "How do you select elements with class name 'test'?", options: ["#test", ".test", "test", "*test"], a: 1 },
+              { q: "How do you select all p elements inside a div element?", options: ["div p", "div.p", "div + p", "div > p"], a: 0 },
+              { q: "How do you group selectors?", options: ["Separate each selector with a space", "Separate each selector with a plus sign", "Separate each selector with a comma", "Separate each selector with a dot"], a: 2 },
+              { q: "What is the default value of the position property?", options: ["relative", "fixed", "absolute", "static"], a: 3 },
+              { q: "Which property is used to change the display behavior of an element?", options: ["display", "visibility", "position", "layout"], a: 0 }
+            ];
+
+            let selectedQuestions = shuffleArray([...cssQuestionPool]).slice(0, 15);
+
+            currentQuiz = selectedQuestions.map(q => {
+              const correctOptionText = q.options[q.a];
+              const shuffledOptions = shuffleArray([...q.options]);
+              const newCorrectIndex = shuffledOptions.indexOf(correctOptionText);
+              return {
+                q: escapeHTML(q.q),
+                options: shuffledOptions.map(opt => escapeHTML(opt)),
+                a: newCorrectIndex
+              };
+            });
+          } else {
+            
+            document.getElementById("quiz-title").textContent = "Final Course Quiz";
+            currentQuiz = [
+              { q: "Did you understand the material in this course?", options: ["Yes", "No", "Somewhat"], a: 0 },
+              { q: "Are you ready to apply these skills?", options: ["Absolutely", "Not yet", "Maybe"], a: 0 }
+            ];
+          }
+
+        renderQuiz();
+        if (window.lucide) window.lucide.createIcons();
+      });
+
+      function renderQuiz() {
+        const container = document.getElementById("quiz-content");
+        let html = "";
+        
+        currentQuiz.forEach((q, index) => {
+          html += `
+            <div class="quiz-question">
+              <h3>${index + 1}. ${q.q}</h3>
+              <div class="quiz-options">
+                ${q.options.map((opt, i) => `
+                  <label class="quiz-option">
+                    <input type="radio" name="q${index}" value="${i}" style="width: 1.2rem; height: 1.2rem; accent-color: var(--primary); flex-shrink: 0;">
+                    <span>${opt}</span>
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        });
+        
+        container.innerHTML = html;
+      }
+
+      window.submitQuiz = function() {
+        let score = 0;
+        let allAnswered = true;
+        
+        currentQuiz.forEach((q, index) => {
+          const selected = document.querySelector(`input[name="q${index}"]:checked`);
+          if (!selected) {
+            allAnswered = false;
+          } else if (parseInt(selected.value) === q.a) {
+            score++;
+          }
+        });
+        
+        if (!allAnswered) {
+          window.showNotification("Please answer all questions before submitting.", "error");
+          return;
+        }
+        
+        const percentage = Math.round((score / currentQuiz.length) * 100);
+        
+        // Save quiz score to localStorage
+        try {
+          if (typeof ProgressManager !== 'undefined') {
+            const quizKey = quizId ? `${courseId}_${quizId}` : courseId;
+            ProgressManager.saveQuizScore(quizKey, percentage);
+          } else {
+            const userStr = localStorage.getItem("digirwa_user");
+            if (userStr) {
+              const user = JSON.parse(userStr);
+              if (!user.quizScores) user.quizScores = {};
+              const quizKey = quizId ? `${courseId}_${quizId}` : courseId;
+              user.quizScores[quizKey] = percentage;
+              localStorage.setItem("digirwa_user", JSON.stringify(user));
+            }
+          }
+        } catch (e) {
+          console.error("Error saving quiz score", e);
+        }
+        
+        document.getElementById("quiz-footer").style.display = "none";
+        
+        let feedbackMsg = "";
+        if (percentage <= 30) {
+          feedbackMsg = "We highly advise you to repeat the course.";
+        } else if (percentage <= 50) {
+          feedbackMsg = "Not so convincing.";
+        } else if (percentage <= 70) {
+          feedbackMsg = "Good work.";
+        } else {
+          feedbackMsg = "Excellent work.";
+        }
+
+        let postQuizButtons = "";
+        if (courseId === 4 && quizId === 'html') {
+          postQuizButtons = `
+            <a href="/pages/interactive-course.html?id=4&lesson=0" class="btn btn-outline">Repeat HTML Course</a>
+            <a href="/pages/interactive-course.html?id=4&lesson=15" class="btn btn-primary">Continue to CSS Course</a>
+          `;
+        } else if (courseId === 4 && quizId === 'css') {
+          postQuizButtons = `
+            <a href="/pages/interactive-course.html?id=4&lesson=15" class="btn btn-outline">Repeat CSS Course</a>
+            <a href="/pages/mycourses.html" class="btn btn-primary">Return to Courses</a>
+          `;
+        } else {
+          postQuizButtons = `
+            <button class="btn btn-outline" onclick="location.reload()">Retry Quiz</button>
+            <a href="/pages/course.html?id=${courseId}" class="btn btn-primary">Return to Course</a>
+          `;
+        }
+        
+        document.getElementById("quiz-content").innerHTML = `
+          <div class="result-container">
+            <i data-lucide="${percentage >= 70 ? 'award' : 'alert-circle'}" style="width: 64px; height: 64px; color: ${percentage >= 70 ? 'var(--success)' : 'var(--warning)'}; margin: 0 auto;"></i>
+            <div class="result-score">Score: ${percentage}%</div>
+            <h3>${feedbackMsg}</h3>
+            <p style="color: var(--text-muted); margin-top: 1rem;">You answered ${score} out of ${currentQuiz.length} questions correctly.</p>
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+              ${postQuizButtons}
+            </div>
+          </div>
+        `;
+        
+        if (window.lucide) window.lucide.createIcons();
+        window.showNotification("Quiz submitted successfully!", "success");
+      };
+    </script>
+  </body>
+</html>

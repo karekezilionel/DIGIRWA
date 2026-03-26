@@ -1,0 +1,39 @@
+(function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const t of document.querySelectorAll('link[rel="modulepreload"]'))n(t);new MutationObserver(t=>{for(const a of t)if(a.type==="childList")for(const s of a.addedNodes)s.tagName==="LINK"&&s.rel==="modulepreload"&&n(s)}).observe(document,{childList:!0,subtree:!0});function i(t){const a={};return t.integrity&&(a.integrity=t.integrity),t.referrerPolicy&&(a.referrerPolicy=t.referrerPolicy),t.crossOrigin==="use-credentials"?a.credentials="include":t.crossOrigin==="anonymous"?a.credentials="omit":a.credentials="same-origin",a}function n(t){if(t.ep)return;t.ep=!0;const a=i(t);fetch(t.href,a)}})();const m=()=>{const o=localStorage.getItem("digirwa_user")!==null,e=window.location.pathname;if(document.querySelector(".sidebar"))return;const i=document.createElement("aside");i.className="sidebar";let n="";o?localStorage.getItem("role")==="admin"?n=`
+            <a href="/admin/dashboard.html" data-i18n="admin_dashboard" class="sidebar-link ${e.includes("admin")?"active":""}"><i data-lucide="layout-dashboard"></i> Admin Dashboard</a>
+            <a href="#" id="logout-btn" data-i18n="logout" class="sidebar-link"><i data-lucide="log-out"></i> Logout</a>
+        `:n=`
+            <a href="/pages/dashboard.html" data-i18n="dashboard" class="sidebar-link ${e.includes("dashboard")?"active":""}"><i data-lucide="layout-dashboard"></i> Overview</a>
+            <a href="/pages/mycourses.html" data-i18n="my_courses" class="sidebar-link ${e.includes("mycourses")?"active":""}"><i data-lucide="book-open"></i> My Courses</a>
+            <a href="/pages/progress.html" data-i18n="progress" class="sidebar-link ${e.includes("progress")?"active":""}"><i data-lucide="bar-chart"></i> Progress</a>
+            <a href="/pages/community.html" data-i18n="community" class="sidebar-link ${e.includes("community")?"active":""}"><i data-lucide="users"></i> Community</a>
+            <a href="/pages/leaderboard.html" data-i18n="leaderboard" class="sidebar-link ${e.includes("leaderboard")?"active":""}"><i data-lucide="award"></i> Leaderboard</a>
+            <a href="/pages/profile.html" data-i18n="profile" class="sidebar-link ${e.includes("profile")?"active":""}"><i data-lucide="user"></i> Profile</a>
+            <a href="/pages/settings.html" data-i18n="settings" class="sidebar-link ${e.includes("settings")?"active":""}"><i data-lucide="settings"></i> Settings</a>
+            <a href="#" id="logout-btn" data-i18n="logout" class="sidebar-link"><i data-lucide="log-out"></i> Logout</a>
+        `:n=`
+            <a href="/index.html" data-i18n="home" class="sidebar-link ${e==="/"||e.includes("index")?"active":""}"><i data-lucide="home"></i> Home</a>
+            <a href="/login.html" data-i18n="login" class="sidebar-link ${e.includes("login")?"active":""}"><i data-lucide="log-in"></i> Login</a>
+            <a href="/register.html" class="sidebar-link ${e.includes("register")?"active":""}"><i data-lucide="user-plus"></i> Register</a>
+        `,i.innerHTML=`
+        <div class="sidebar-header">
+            <a href="${o?"/pages/dashboard.html":"/index.html"}" class="sidebar-brand">DIGIRWA</a>
+        </div>
+        <div class="sidebar-menu">
+            ${n}
+        </div>
+        <div class="sidebar-footer">
+            <div class="sidebar-controls">
+                <button id="theme-toggle" class="icon-btn"><i data-lucide="moon"></i></button>
+            </div>
+            <select id="lang-toggle" class="lang-select">
+                <option value="en">English</option>
+                <option value="rw">Kinyarwanda</option>
+            </select>
+        </div>
+    `,document.body.prepend(i);const t=document.createElement("div");t.className="mobile-header",t.innerHTML=`
+        <a href="${o?"/pages/dashboard.html":"/index.html"}" class="sidebar-brand">DIGIRWA</a>
+        <button class="mobile-menu-btn"><i data-lucide="menu"></i></button>
+  `;const a=document.createElement("main");a.className="main-content",a.appendChild(t),Array.from(document.body.children).forEach(s=>{s!==i&&s!==a&&s.tagName!=="SCRIPT"&&a.appendChild(s)}),document.body.insertBefore(a,i.nextSibling)};window.trackActiveCourse=o=>{let e=JSON.parse(localStorage.getItem("activeCourses")||"[]");e.includes(o)||(e.push(o),localStorage.setItem("activeCourses",JSON.stringify(e)))};window.sessionStartTime=Date.now();window.updateLearningTime=()=>{const o=Date.now(),e=o-window.sessionStartTime;let i=parseInt(localStorage.getItem("totalLearningTime")||"0");i+=e,localStorage.setItem("totalLearningTime",i),window.sessionStartTime=o};window.addEventListener("beforeunload",window.updateLearningTime);setInterval(window.updateLearningTime,6e4);window.showNotification=(o,e="success")=>{let i=document.querySelector(".notification-container");i||(i=document.createElement("div"),i.className="notification-container",document.body.appendChild(i));const n=document.createElement("div");n.className=`notification ${e}`,n.innerHTML=`
+        <i data-lucide="${e==="success"?"check-circle":"alert-circle"}"></i>
+        <span>${o}</span>
+    `,i.appendChild(n),window.lucide&&window.lucide.createIcons(),setTimeout(()=>{n.style.animation="slideOut 0.3s ease forwards",setTimeout(()=>n.remove(),300)},3e3)};document.addEventListener("DOMContentLoaded",()=>{const o=localStorage.getItem("digirwa_user")!==null,e=window.location.pathname;if(o&&(e==="/"||e.includes("index.html")||e.includes("login.html")||e.includes("register.html"))){localStorage.getItem("role")==="admin"?window.location.href="/admin/dashboard.html":window.location.href="/pages/dashboard.html";return}if(!o&&(e.includes("/pages/")||e.includes("/admin/"))){window.location.href="/login.html";return}m();const i=document.createElement("script");i.src="https://unpkg.com/lucide@latest",i.onload=()=>{lucide.createIcons()},document.head.appendChild(i);const n=document.getElementById("theme-toggle"),t=window.matchMedia("(prefers-color-scheme: dark)").matches,a=localStorage.getItem("digirwa_theme")||(t?"dark":"light");if(document.documentElement.setAttribute("data-theme",a),n&&n.addEventListener("click",()=>{const r=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",r),localStorage.setItem("digirwa_theme",r);const l=n.querySelector("i");l&&window.lucide&&(l.setAttribute("data-lucide",r==="dark"?"sun":"moon"),lucide.createIcons())}),typeof initLanguage=="function"){initLanguage();const d=document.getElementById("lang-toggle");d&&d.addEventListener("change",r=>{setLanguage(r.target.value)})}const s=document.querySelector(".mobile-menu-btn"),c=document.querySelector(".sidebar");s&&c&&(s.addEventListener("click",()=>{c.classList.toggle("show")}),c.querySelectorAll(".sidebar-link").forEach(r=>{r.addEventListener("click",()=>{window.innerWidth<=1024&&c.classList.remove("show")})}));const u=document.getElementById("logout-btn");u&&u.addEventListener("click",d=>{d.preventDefault(),localStorage.removeItem("digirwa_user"),localStorage.removeItem("role"),window.location.href="/login.html"}),document.querySelectorAll(".password-toggle").forEach(d=>{d.addEventListener("click",function(){const r=this.previousElementSibling,l=this.querySelector("i");r.type==="password"?(r.type="text",l.setAttribute("data-lucide","eye-off")):(r.type="password",l.setAttribute("data-lucide","eye")),window.lucide&&lucide.createIcons()})})});

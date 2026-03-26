@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community - DIGIRWA</title>
+    <script type="module" crossorigin src="../assets/main-Bj8hB6fU.js"></script>
+    <script type="module" crossorigin src="../assets/progress-l0sNRNKZ.js"></script>
+    <script type="module" crossorigin src="../assets/data-DK6-LDdd.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/main-BFZFGG2g.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="margin-bottom: 2rem" data-i18n="community">Community</h1>
+
+      <div class="card" style="margin-bottom: 2rem">
+        <textarea
+          id="new-post-content"
+          class="form-control"
+          rows="3"
+          placeholder="Write something to the community..."
+          data-i18n="write_something"
+          style="margin-bottom: 1rem; resize: none"
+        ></textarea>
+        <div style="display: flex; justify-content: flex-end">
+          <button id="post-btn" class="btn btn-primary" data-i18n="post">Post</button>
+        </div>
+      </div>
+
+      <div id="community-posts"></div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("community-posts");
+        const postBtn = document.getElementById("post-btn");
+        const newPostContent = document.getElementById("new-post-content");
+        
+        let user = JSON.parse(localStorage.getItem("digirwa_user") || '{"name": "Anonymous"}');
+        
+       
+        if (!localStorage.getItem("digirwa_community_posts")) {
+          localStorage.setItem("digirwa_community_posts", JSON.stringify([]));
+        }
+
+        const getPosts = () => JSON.parse(localStorage.getItem("digirwa_community_posts") || "[]");
+        const savePosts = (posts) => localStorage.setItem("digirwa_community_posts", JSON.stringify(posts));
+        const getUsers = () => JSON.parse(localStorage.getItem("digirwa_users") || "[]");
+
+        const renderAvatar = (authorName, size = 40) => {
+          const nameParts = authorName.trim().split(" ");
+          const firstLetter = nameParts[0].charAt(0).toUpperCase();
+          return firstLetter;
+        };
+
+        const renderPosts = () => {
+          const posts = getPosts();
+          if (posts.length === 0) {
+            container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">No posts yet. Be the first to start a conversation!</p>';
+            return;
+          }
+
+          container.innerHTML = posts.sort((a, b) => b.timestamp - a.timestamp).map(p => `
+            <div class="card" style="margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <div class="user-avatar" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                        ${renderAvatar(p.author)}
+                    </div>
+                    <div>
+                        <h4 style="margin: 0;">${p.author}</h4>
+                        <span style="color: var(--text-muted); font-size: 0.8rem;">${new Date(p.timestamp).toLocaleString()}</span>
+                    </div>
+                </div>
+                <p style="margin-bottom: 1rem; line-height: 1.5;">${p.content}</p>
+                <div style="display: flex; gap: 1rem; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                    <span style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;" onclick="likePost('${p.id}')"><i data-lucide="heart" style="width: 16px;"></i> ${p.likes || 0}</span>
+                    <span style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;" onclick="toggleReplyForm('${p.id}')"><i data-lucide="message-square" style="width: 16px;"></i> ${p.replies ? p.replies.length : 0} Replies</span>
+                </div>
+                
+                <!-- Replies Section -->
+                <div class="replies-container" style="margin-left: 3rem; border-left: 2px solid var(--border); padding-left: 1rem;">
+                  ${(p.replies || []).map(reply => `
+                    <div style="margin-bottom: 1rem;">
+                      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <div class="user-avatar" style="width: 24px; height: 24px; font-size: 0.7rem; background: var(--text-muted);">
+                            ${renderAvatar(reply.author)}
+                        </div>
+                        <h5 style="margin: 0; font-size: 0.9rem;">${reply.author}</h5>
+                        <span style="color: var(--text-muted); font-size: 0.7rem;">${new Date(reply.timestamp).toLocaleString()}</span>
+                      </div>
+                      <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">${reply.content}</p>
+                    </div>
+                  `).join('')}
+                  
+                  <!-- Reply Form (Hidden by default) -->
+                  <div id="reply-form-${p.id}" style="display: none; margin-top: 1rem;">
+                    <textarea id="reply-input-${p.id}" class="form-control" rows="2" placeholder="Write a reply..." style="margin-bottom: 0.5rem; resize: none; font-size: 0.9rem;"></textarea>
+                    <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+                      <button class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;" onclick="toggleReplyForm('${p.id}')">Cancel</button>
+                      <button class="btn btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;" onclick="submitReply('${p.id}')">Reply</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          `).join("");
+          
+          if (window.lucide) lucide.createIcons();
+        };
+
+        
+        postBtn.addEventListener("click", () => {
+          const content = newPostContent.value.trim();
+          if (!content) return;
+
+          const posts = getPosts();
+          const newPost = {
+            id: 'post_' + Date.now(),
+            author: user.name || "Anonymous",
+            content: content,
+            timestamp: Date.now(),
+            likes: 0,
+            replies: []
+          };
+          
+          posts.push(newPost);
+          savePosts(posts);
+          
+          newPostContent.value = "";
+          renderPosts();
+        });
+
+      
+        window.toggleReplyForm = (postId) => {
+          const form = document.getElementById(`reply-form-${postId}`);
+          if (form) {
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+          }
+        };
+
+        window.submitReply = (postId) => {
+          const input = document.getElementById(`reply-input-${postId}`);
+          const content = input.value.trim();
+          if (!content) return;
+
+          const posts = getPosts();
+          const postIndex = posts.findIndex(p => p.id === postId);
+          if (postIndex !== -1) {
+            if (!posts[postIndex].replies) posts[postIndex].replies = [];
+            posts[postIndex].replies.push({
+              id: 'reply_' + Date.now(),
+              author: user.name || "Anonymous",
+              content: content,
+              timestamp: Date.now()
+            });
+            savePosts(posts);
+            renderPosts();
+          }
+        };
+
+        window.likePost = (postId) => {
+          const posts = getPosts();
+          const postIndex = posts.findIndex(p => p.id === postId);
+          if (postIndex !== -1) {
+            posts[postIndex].likes = (posts[postIndex].likes || 0) + 1;
+            savePosts(posts);
+            renderPosts();
+          }
+        };
+
+       
+        renderPosts();
+
+        window.addEventListener("storage", (e) => {
+          if (e.key === "digirwa_community_posts" || e.key === "digirwa_users" || e.key === "digirwa_user") {
+            if (e.key === "digirwa_user") {
+              user = JSON.parse(e.newValue || '{"name": "Anonymous"}');
+            }
+            renderPosts();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

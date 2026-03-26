@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - DIGIRWA</title>
+    <script type="module" crossorigin src="../assets/main-Bj8hB6fU.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/main-BFZFGG2g.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="margin-bottom: 2rem" data-i18n="profile">Profile</h1>
+
+      <div class="card" style="max-width: 600px">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+          "
+        >
+          <div
+            class="user-avatar"
+            style="
+              width: 80px;
+              height: 80px;
+              font-size: 2.5rem;
+            "
+            id="profile-avatar"
+          >
+            U
+          </div>
+          <div>
+            <h2 id="profile-name" style="margin-bottom: 0.25rem">User Name</h2>
+            <p id="profile-email" style="color: var(--text-muted); margin-bottom: 0.5rem;">
+              user@example.com
+            </p>
+          </div>
+        </div>
+
+        <form>
+          <div class="form-group">
+            <label for="name" data-i18n="name">Full Name</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              value="User Name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="email" data-i18n="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              value="user@example.com"
+            />
+          </div>
+          <div class="form-group">
+            <label>Learning Interests</label>
+            <div
+              style="
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                margin-top: 0.5rem;
+              "
+            >
+              <span class="badge badge-completed">Web Development</span>
+              <span class="badge badge-completed">Digital Literacy</span>
+              <span class="badge badge-completed">Entrepreneurship</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <button
+              type="button"
+              id="save-btn"
+              class="btn btn-primary"
+              data-i18n="save_changes"
+            >
+              Save Changes
+            </button>
+            <button
+              type="button"
+              id="delete-btn"
+              class="btn btn-outline"
+              style="color: var(--danger); border-color: var(--danger);"
+            >
+              Delete Account
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const user = JSON.parse(localStorage.getItem("digirwa_user") || "{}");
+        const updateAvatarDisplay = () => {
+          const avatarEl = document.getElementById("profile-avatar");
+          const nameToUse = document.getElementById("name").value.trim() || user.name || "U";
+          const nameParts = nameToUse.trim().split(" ");
+          const firstLetter = nameParts[0].charAt(0).toUpperCase();
+          avatarEl.textContent = firstLetter;
+        };
+
+        if (user.name) {
+          document.getElementById("profile-name").textContent = user.name;
+          document.getElementById("name").value = user.name;
+          updateAvatarDisplay();
+        }
+        if (user.email) {
+          document.getElementById("profile-email").textContent = user.email;
+          document.getElementById("email").value = user.email;
+        }
+
+        document.getElementById("save-btn").addEventListener("click", () => {
+          const newName = document.getElementById("name").value.trim();
+          const newEmail = document.getElementById("email").value.trim();
+          if (newName && newEmail) {
+            const oldEmail = user.email;
+            user.name = newName;
+            user.email = newEmail;
+            
+            localStorage.setItem("digirwa_user", JSON.stringify(user));
+            
+            
+            let users = JSON.parse(localStorage.getItem("digirwa_users") || "[]");
+            const index = users.findIndex(u => u.email === oldEmail);
+            if (index !== -1) {
+              users[index].name = newName;
+              users[index].email = newEmail;
+              localStorage.setItem("digirwa_users", JSON.stringify(users));
+            }
+
+            document.getElementById("profile-name").textContent = newName;
+            document.getElementById("profile-email").textContent = newEmail;
+            updateAvatarDisplay();
+            window.dispatchEvent(new Event('storage'));
+            
+            if (window.showNotification) {
+              window.showNotification("Profile updated successfully!", "success");
+            } else {
+              alert("Profile updated successfully!");
+            }
+          } else {
+            if (window.showNotification) {
+              window.showNotification("Please fill in all fields", "error");
+            } else {
+              alert("Please fill in all fields");
+            }
+          }
+        });
+
+        document.getElementById("delete-btn").addEventListener("click", () => {
+          if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+            
+            let users = JSON.parse(localStorage.getItem("digirwa_users") || "[]");
+            users = users.filter(u => u.email !== user.email);
+            localStorage.setItem("digirwa_users", JSON.stringify(users));
+
+            localStorage.removeItem("digirwa_user");
+            localStorage.removeItem("role");
+            window.location.href = "/index.html";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

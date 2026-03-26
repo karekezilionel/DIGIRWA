@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - DIGIRWA</title>
+    <script type="module" crossorigin src="../assets/main-Bj8hB6fU.js"></script>
+    <script type="module" crossorigin src="../assets/progress-l0sNRNKZ.js"></script>
+    <script type="module" crossorigin src="../assets/data-DK6-LDdd.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/main-BFZFGG2g.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="dashboard-header">
+        <div>
+          <h1 id="welcome-msg">Welcome, User</h1>
+          <p style="color: var(--text-muted)">
+            Here is your learning overview.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom: 2rem">
+        <div class="card stat-card">
+          <div class="stat-icon"><i data-lucide="book-open"></i></div>
+          <div class="stat-info">
+            <h3 id="active-courses-count">0</h3>
+            <p data-i18n="stats_courses">Active Courses</p>
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-icon"><i data-lucide="clock"></i></div>
+          <div class="stat-info">
+            <h3 id="hours-learned-count">0 min</h3>
+            <p data-i18n="stats_hours">Hours Learned</p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <h2 class="section-title" data-i18n="recent_courses">
+          Recently Accessed Courses
+        </h2>
+        <a
+          href="/pages/mycourses.html"
+          style="color: var(--primary); text-decoration: none; font-weight: 500"
+          data-i18n="view_all"
+          >View All</a
+        >
+      </div>
+      <div class="grid-3" id="dashboard-courses">
+       
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const user = JSON.parse(localStorage.getItem("digirwa_user") || "{}");
+        if (user.name) {
+          document.getElementById("welcome-msg").textContent =
+            `Welcome, ${user.name}`;
+        }
+        if (window.renderCourses) {
+          window.renderCourses("dashboard-courses", 3);
+        }
+
+        const updateStats = () => {
+          
+          const activeCourses = JSON.parse(localStorage.getItem("activeCourses") || "[]");
+          document.getElementById("active-courses-count").textContent = activeCourses.length;
+
+          
+          if (window.updateLearningTime) {
+            window.updateLearningTime(); 
+          }
+          const totalLearningTime = parseInt(localStorage.getItem("totalLearningTime") || "0");
+          const totalMinutes = Math.floor(totalLearningTime / 60000);
+          
+          let timeDisplay = "0 min";
+          if (totalMinutes > 0 && totalMinutes < 60) {
+            timeDisplay = `${totalMinutes} min`;
+          } else if (totalMinutes >= 60) {
+            const hours = (totalMinutes / 60).toFixed(1);
+            timeDisplay = `${hours}h`;
+          }
+          document.getElementById("hours-learned-count").textContent = timeDisplay;
+        };
+
+        updateStats();
+        setInterval(updateStats, 60000); 
+      });
+    </script>
+  </body>
+</html>

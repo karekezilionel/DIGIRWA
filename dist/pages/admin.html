@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - DIGIRWA</title>
+    <script type="module" crossorigin src="../assets/main-Bj8hB6fU.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/main-BFZFGG2g.css">
+  </head>
+  <body>
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1 data-i18n="admin_panel">Admin Panel</h1>
+        <span class="badge badge-pending">Placeholder</span>
+      </div>
+
+      <div class="grid-3" style="margin-bottom: 2rem">
+        <div class="card stat-card">
+          <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);"><i data-lucide="users"></i></div>
+          <div class="stat-info">
+            <h3>1,245</h3>
+            <p>Total Users</p>
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-icon" style="background: rgba(37, 99, 235, 0.1); color: var(--primary);"><i data-lucide="book-open"></i></div>
+          <div class="stat-info">
+            <h3>24</h3>
+            <p>Active Courses</p>
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);"><i data-lucide="bar-chart"></i></div>
+          <div class="stat-info">
+            <h3>85%</h3>
+            <p>Avg Completion</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2 class="section-title" style="margin: 0;">Manage Courses</h2>
+            <button class="btn btn-primary" style="padding: 0.5rem 1rem;"><i data-lucide="plus" style="width: 16px; height: 16px; vertical-align: middle;"></i> Add Course</button>
+          </div>
+          
+          <div class="list-item">
+            <div>
+              <h3 style="margin-bottom: 0.25rem;">Introduction to Web Development</h3>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">4 Modules • 150 Students</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-outline" style="padding: 0.25rem 0.5rem;"><i data-lucide="edit-2" style="width: 16px; height: 16px;"></i></button>
+              <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; color: var(--danger); border-color: var(--danger);"><i data-lucide="trash-2" style="width: 16px; height: 16px;"></i></button>
+            </div>
+          </div>
+          <div class="list-item">
+            <div>
+              <h3 style="margin-bottom: 0.25rem;">Digital Literacy Basics</h3>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">3 Modules • 320 Students</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-outline" style="padding: 0.25rem 0.5rem;"><i data-lucide="edit-2" style="width: 16px; height: 16px;"></i></button>
+              <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; color: var(--danger); border-color: var(--danger);"><i data-lucide="trash-2" style="width: 16px; height: 16px;"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title" style="margin-top: 0; margin-bottom: 1.5rem;">User Reports</h2>
+          <div style="text-align: center; padding: 2rem 0; color: var(--text-muted);">
+            <i data-lucide="pie-chart" style="width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.5;"></i>
+            <p>Analytics dashboard placeholder.</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Will be populated with Firebase data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.lucide) window.lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>
