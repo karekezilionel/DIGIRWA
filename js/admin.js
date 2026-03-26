@@ -67,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
     attachCourseEvents();
   }
 
-  // Event Listeners for Actions
   function attachUserEvents() {
     document.querySelectorAll(".delete-user-btn").forEach(btn => {
       btn.addEventListener("click", (e) => {
