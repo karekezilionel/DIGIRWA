@@ -26,7 +26,6 @@ Instant feedback on answers
 Score tracking
 
 
-
  **User Authentication (Client-side)**
 
 Simple login/logout system
@@ -37,7 +36,6 @@ Multi-user support with separate progress
 
 Displays user name
 Shows enrolled/available courses
-Shows recent activity
 Displays progress overview
 
 
@@ -71,7 +69,6 @@ Click login to access the dashboard
 Step 2: Explore Dashboard
 View available courses
 Check progress overview
-Access recently viewed courses
 
 Step 3: Start a Course
 Click on a course card
