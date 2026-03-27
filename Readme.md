@@ -135,7 +135,7 @@ Expanded course library with many other courses
 Offline learning support
 
 
-Author
+**Author**
 
 Karekezi Lionel
 Software Engineering Student – African Leadership University
