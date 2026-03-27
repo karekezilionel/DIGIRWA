@@ -155,11 +155,17 @@ Access overall platform insights
 **Future Improvements**
 
 Backend integration (Node.js + database)
+
 Cloud-based authentication system
+
 Real-time progress syncing
+
 Mobile application version
+
 AI-powered personalized learning recommendations
+
 Expanded course library with many other courses
+
 Offline learning support
 
 
