@@ -1,17 +1,6 @@
 const mockData = {
     courses: [
     {
-      id: 1,
-      title: "Digital Literacy Basics",
-      progress: 20,
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80",
-      lessons: [
-        { id: 101, title: "Introduction to Digital Literacy", desc: "Learn the basics and fundamentals of digital literacy.", videoId: "dQw4w9WgXcQ" },
-        { id: 102, title: "Basic Computer Skills", desc: "Learn about computer hardware, software, and basic operations.", videoId: "jNQXAC9IVRw" },
-        { id: 103, title: "Internet Fundamentals", desc: "Understand how the internet works and how to browse safely.", videoId: "tgbNymZ7vqY" }
-      ]
-    },
-    {
       id: 2,
       title: "Microsoft Office Essentials",
       progress: 0,
@@ -414,13 +403,7 @@ const mockData = {
         }
       ]
     },
-    {
-      id: 5,
-      title: "JavaScript Fundamentals",
-      progress: 0,
-      image: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&w=400&q=80",
-      lessons: []
-    }
+  
   ],
   assignments: [
     {
