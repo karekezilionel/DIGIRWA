@@ -125,6 +125,30 @@ Answer the questions and receive instant feedback.
 Test with Another User
 Logout and login with a different username to confirm that progress is user-specific.
 
+**Admin Features**
+
+The admin has access to the following capabilities:
+
+User Management
+
+Course Management
+
+Add new courses
+
+Edit existing courses
+
+Delete courses
+
+Manage lessons and course materials
+
+Track student progress across courses
+
+
+
+System Overview
+
+Access overall platform insights
+
 
 
 
