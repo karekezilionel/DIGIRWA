@@ -102,19 +102,26 @@ For the best understanding of the platform, we recommend using the HTML & CSS co
 
 **Login**
 Enter any username to access the platform.
+
 **Open Dashboard**
 View available courses and overall progress.
+
+
 Select the HTML & CSS Course
 This course provides the most complete learning experience.
+
 Go Through a Lesson
 Read the instructions provided on the left panel.
 Study the content and understand the task.
+
 Practice the Exercises
 Use the code editor to complete the tasks.
 Click Run Code to test your solution.
 Observe the output in the preview panel.
+
 Take the Quiz
 Answer the questions and receive instant feedback.
+
 Test with Another User
 Logout and login with a different username to confirm that progress is user-specific.
 
