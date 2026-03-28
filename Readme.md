@@ -1,25 +1,25 @@
-Project Overview
+**Project Overview**
 
 DIGIRWA is a web based digital learning platform designed to provide accessible, interactive, and practical learning experiences for Rwandan youth. The platform focuses on bridging the gap between traditional education and digital skills by offering structured courses, hands-on exercises, quizzes, and progress tracking.
 
 The platform is built as a client-side application using HTML, CSS, and JavaScript, with LocalStorage used for data persistence.
 
-Key Features
+**Key Features**
 
- Course Management
+ **Course Management**
 Multiple structured courses
 Lessons organized per course
 Dynamic course rendering
 Course-specific pages and routing
 
-Interactive Learning
+**Interactive Learning**
 
 Video-based lessons (YouTube integration)
 Transcripts for better understanding
 Hands-on coding exercises (HTML/CSS)
 Interactive learning pages
 
- Quizzes & Assessments
+ **Quizzes & Assessments**
 
 Multiple-choice quizzes per lesson
 Instant feedback on answers
@@ -27,24 +27,21 @@ Score tracking
 
 
 
- User Authentication (Client-side)
+ **User Authentication (Client-side)**
 
 Simple login/logout system
 Session stored in LocalStorage
 Multi-user support with separate progress
 
- Personalized Dashboard
+ **Personalized Dashboard**
 
 Displays user name
 Shows enrolled/available courses
 Shows recent activity
 Displays progress overview
 
- Localization Support
 
-Includes multilingual support in content (e.g., English + Kinyarwanda transcripts)
-
-Authentication
+**Authentication**
 
 DIGIRWA uses Firebase Authentication to handle user sign-up and login securely.
 
@@ -55,17 +52,17 @@ Secure user session management
 Integration with the dashboard and progress system
 
 
-installation & Setup
+**installation & Setup&**
 
-1. Clone the repository
+**1. Clone the repository**
 git clone https://github.com/karekezilionel/DIGIRWA.git
 cd digirwa
-2. Install dependencies
+**2. Install dependencies**
 npm install
-3. Run the development server
+**3. Run the development server**
 npm run dev
 
-How to Use the Application
+**How to Use the Application**
 
 Step 1: Login
 Enter your username
@@ -97,45 +94,82 @@ Visible in dashboard and course pages
 
 
 
-Recommended Demo(For Facilitator)
+**Recommended Demo(For Facilitator)**
 
 For the best understanding of the platform, we recommend using the HTML & CSS course. This course is well structured and ideal for practice, as it focuses on hands on learning with interactive exercises, and quizzes
 
-Demo Steps
+**Demo Steps**
 
-Login
+**Login**
 Enter any username to access the platform.
-Open Dashboard
+
+**Open Dashboard**
 View available courses and overall progress.
+
+
 Select the HTML & CSS Course
 This course provides the most complete learning experience.
+
 Go Through a Lesson
 Read the instructions provided on the left panel.
 Study the content and understand the task.
+
 Practice the Exercises
 Use the code editor to complete the tasks.
 Click Run Code to test your solution.
 Observe the output in the preview panel.
+
 Take the Quiz
 Answer the questions and receive instant feedback.
+
 Test with Another User
 Logout and login with a different username to confirm that progress is user-specific.
 
+**Admin Features**
+
+The admin has access to the following capabilities:
+
+User Management
+
+Course Management
+
+Add new courses
+
+Edit existing courses
+
+Delete courses
+
+Manage lessons and course materials
+
+Track student progress across courses
 
 
 
-Future Improvements
+System Overview
+
+Access overall platform insights
+
+
+
+
+**Future Improvements**
 
 Backend integration (Node.js + database)
+
 Cloud-based authentication system
+
 Real-time progress syncing
+
 Mobile application version
+
 AI-powered personalized learning recommendations
+
 Expanded course library with many other courses
+
 Offline learning support
 
 
-Author
+**Author**
 
 Karekezi Lionel
-Software Engineering Student – African Leadership University.
+Software Engineering Student – African Leadership University
