@@ -41,7 +41,6 @@ const ProgressManager = {
     localStorage.setItem("userProgress", JSON.stringify(allProgress));
   },
 
-  
   completeLesson: function (courseId, lessonId) {
     const progress = this.getUserProgress();
     if (!progress) return;
@@ -63,7 +62,6 @@ const ProgressManager = {
     }
   },
 
-  
   saveQuizScore: function (courseId, score) {
     const progress = this.getUserProgress();
     if (!progress) return;
@@ -79,12 +77,10 @@ const ProgressManager = {
     this.saveUserProgress(progress);
   },
 
-  
   isCourseUnlocked: function (courseId) {
     const progress = this.getUserProgress();
     if (!progress) return false;
 
-    // First course always unlocked
     if (!progress || Object.keys(progress).length === 0) {
       return true;
     }
@@ -105,7 +101,6 @@ const ProgressManager = {
     );
   },
 
-  
   getCourseCompletionPercentage: function (courseId, totalLessons) {
     const progress = this.getUserProgress();
 
@@ -125,7 +120,6 @@ const ProgressManager = {
 
     return percentage;
   },
-
 
   getTotalScore: function (email) {
     const allProgress = this.getAllProgress();
@@ -148,3 +142,4 @@ const ProgressManager = {
     return this.getTotalScore(email);
   }
 };
+window.ProgressManager = ProgressManager;
