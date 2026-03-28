@@ -45,10 +45,7 @@ const injectSidebar = () => {
             <div class="sidebar-controls">
                 <button id="theme-toggle" class="icon-btn"><i data-lucide="moon"></i></button>
             </div>
-            <select id="lang-toggle" class="lang-select">
-                <option value="en">English</option>
-                <option value="rw">Kinyarwanda</option>
-            </select>
+            
         </div>
     `;
 

@@ -25,10 +25,7 @@
             <div class="sidebar-controls">
                 <button id="theme-toggle" class="icon-btn"><i data-lucide="moon"></i></button>
             </div>
-            <select id="lang-toggle" class="lang-select">
-                <option value="en">English</option>
-                <option value="rw">Kinyarwanda</option>
-            </select>
+            
         </div>
     `,document.body.prepend(i);const t=document.createElement("div");t.className="mobile-header",t.innerHTML=`
         <a href="${o?"/pages/dashboard.html":"/index.html"}" class="sidebar-brand">DIGIRWA</a>
