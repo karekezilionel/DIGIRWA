@@ -21,7 +21,6 @@ const injectSidebar = () => {
             <a href="/pages/mycourses.html" data-i18n="my_courses" class="sidebar-link ${currentPath.includes("mycourses") ? "active" : ""}"><i data-lucide="book-open"></i> My Courses</a>
             <a href="/pages/progress.html" data-i18n="progress" class="sidebar-link ${currentPath.includes("progress") ? "active" : ""}"><i data-lucide="bar-chart"></i> Progress</a>
             <a href="/pages/community.html" data-i18n="community" class="sidebar-link ${currentPath.includes("community") ? "active" : ""}"><i data-lucide="users"></i> Community</a>
-            <a href="/pages/leaderboard.html" data-i18n="leaderboard" class="sidebar-link ${currentPath.includes("leaderboard") ? "active" : ""}"><i data-lucide="award"></i> Leaderboard</a>
             <a href="/pages/profile.html" data-i18n="profile" class="sidebar-link ${currentPath.includes("profile") ? "active" : ""}"><i data-lucide="user"></i> Profile</a>
             <a href="/pages/settings.html" data-i18n="settings" class="sidebar-link ${currentPath.includes("settings") ? "active" : ""}"><i data-lucide="settings"></i> Settings</a>
             <a href="#" id="logout-btn" data-i18n="logout" class="sidebar-link"><i data-lucide="log-out"></i> Logout</a>
