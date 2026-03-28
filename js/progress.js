@@ -41,7 +41,7 @@ const ProgressManager = {
     localStorage.setItem("userProgress", JSON.stringify(allProgress));
   },
 
-  // ✅ Mark lesson complete (MAIN FUNCTION)
+  
   completeLesson: function (courseId, lessonId) {
     const progress = this.getUserProgress();
     if (!progress) return;
@@ -63,7 +63,7 @@ const ProgressManager = {
     }
   },
 
-  // ✅ Save quiz score
+  
   saveQuizScore: function (courseId, score) {
     const progress = this.getUserProgress();
     if (!progress) return;
@@ -79,7 +79,7 @@ const ProgressManager = {
     this.saveUserProgress(progress);
   },
 
-  // ✅ Course unlock logic (fixed)
+  
   isCourseUnlocked: function (courseId) {
     const progress = this.getUserProgress();
     if (!progress) return false;
@@ -92,7 +92,6 @@ const ProgressManager = {
     const courseKeys = Object.keys(progress);
     const currentIndex = courseKeys.indexOf(courseId);
 
-    // First in list is unlocked
     if (currentIndex <= 0) return true;
 
     const prevCourseId = courseKeys[currentIndex - 1];
@@ -106,7 +105,7 @@ const ProgressManager = {
     );
   },
 
-  // ✅ Completion percentage
+  
   getCourseCompletionPercentage: function (courseId, totalLessons) {
     const progress = this.getUserProgress();
 
@@ -127,7 +126,7 @@ const ProgressManager = {
     return percentage;
   },
 
-  // ✅ Total quiz score
+
   getTotalScore: function (email) {
     const allProgress = this.getAllProgress();
     const userProg = allProgress[email];
@@ -145,7 +144,6 @@ const ProgressManager = {
     return total;
   },
 
-  // ✅ Average progress (fixed placeholder logic)
   getAverageProgress: function (email) {
     return this.getTotalScore(email);
   }
