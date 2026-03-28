@@ -172,4 +172,3 @@ Offline learning support
 **Author**
 
 Karekezi Lionel
-Software Engineering Student – African Leadership University
