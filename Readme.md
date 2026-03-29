@@ -6,37 +6,50 @@ The platform is built as a client-side application using HTML, CSS, and JavaScri
 
 **Key Features**
 
- **Course Management**
-Multiple structured courses
-Lessons organized per course
-Dynamic course rendering
-Course-specific pages and routing
+1.Course Management
+
+2.Multiple structured courses
+
+3.Lessons organized per course
+
+4.Dynamic course rendering
+
+5.Course-specific pages and routing
 
 **Interactive Learning**
 
-Video-based lessons (YouTube integration)
-Transcripts for better understanding
-Hands-on coding exercises (HTML/CSS)
-Interactive learning pages
+1.Video-based lessons (YouTube integration)
+
+2.Transcripts for better understanding
+
+3.Hands on coding exercises (HTML/CSS)
+
+4.Interactive learning pages
 
  **Quizzes & Assessments**
 
-Multiple-choice quizzes per lesson
-Instant feedback on answers
-Score tracking
+1.Multiple-choice quizzes per lesson
+
+2.Instant feedback on answers
+
+3.Score tracking
 
 
  **User Authentication (Client-side)**
 
-Simple login/logout system
-Session stored in LocalStorage
-Multi-user support with separate progress
+1.Simple login/logout system
+
+2.Session stored in LocalStorage
+
+3.Multi-user support with separate progress
 
  **Personalized Dashboard**
 
-Displays user name
-Shows enrolled/available courses
-Displays progress overview
+1.Displays user name
+
+2.Shows enrolled/available courses
+
+3.Displays progress overview
 
 
 **Authentication**
@@ -45,19 +58,27 @@ DIGIRWA uses Firebase Authentication to handle user sign-up and login securely.
 
 Features:
 
-Email and password authentication
-Secure user session management
-Integration with the dashboard and progress system
+1.Email and password authentication
+
+2.Secure user session management
+
+3.Integration with the dashboard and progress system
 
 
 **installation & Setup&**
 
 **1. Clone the repository**
+
 git clone https://github.com/karekezilionel/DIGIRWA.git
+
 cd digirwa
+
 **2. Install dependencies**
+
 npm install
+
 **3. Run the development server**
+
 npm run dev
 
 **How to Use the Application**
