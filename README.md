@@ -110,11 +110,49 @@ Step 7: Track Progress
 Progress updates automatically
 Visible in dashboard and course pages
 
+**Admin Access**
+
+The DIGIRWA platform includes a dedicated Admin Dashboard that allows full control and management of the system. This role is designed to ensure smooth operation, content management, and user oversight.
+
+**Admin Registration Policy**
+
+Unlike regular users, the admin does not need to register.
+
+-Admin access is pre-configured
+
+-Credentials are granted by the system
+
+-This ensures security and controlled access
+
+
+**How to Access the Admin Dashboard**
+
+1.Navigate to the Login Page
+
+2.On ROLE, choose admin
+
+3.Enter the admin credentials:
+   Email: admin@digirwa.com
+   Password: admin123
+   
+4.Click Login
+
+You will be redirected to the Admin Dashboard
+
+**The admin has access to the following functionalities:**
+
+ **User Management**
+ 
+View and manage registered users on the platform
+
+**Course Management**
+
+Add, update, or remove learning content
 
 
 **Recommended Demo(For Facilitator)**
 
-For the best understanding of the platform, we recommend using the HTML & CSS course. This course is well structured and ideal for practice, as it focuses on hands on learning with interactive exercises, and quizzes
+For the best understanding of the platform, we recommend using the HTML & CSS course. This course is well structured and ideal for practice, as it focuses on hands on learning with interactive exercises, and quizzes.
 
 **Demo Steps**
 
